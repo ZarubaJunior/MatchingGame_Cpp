@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33627.172
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Matching game", "Matching game.vcxproj", "{41990F4C-776E-48A8-A423-68BE13519A2F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{41990F4C-776E-48A8-A423-68BE13519A2F}.Debug|x64.ActiveCfg = Debug|x64
+		{41990F4C-776E-48A8-A423-68BE13519A2F}.Debug|x64.Build.0 = Debug|x64
+		{41990F4C-776E-48A8-A423-68BE13519A2F}.Debug|x86.ActiveCfg = Debug|Win32
+		{41990F4C-776E-48A8-A423-68BE13519A2F}.Debug|x86.Build.0 = Debug|Win32
+		{41990F4C-776E-48A8-A423-68BE13519A2F}.Release|x64.ActiveCfg = Release|x64
+		{41990F4C-776E-48A8-A423-68BE13519A2F}.Release|x64.Build.0 = Release|x64
+		{41990F4C-776E-48A8-A423-68BE13519A2F}.Release|x86.ActiveCfg = Release|Win32
+		{41990F4C-776E-48A8-A423-68BE13519A2F}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AC0FFEF5-6520-4CBC-8DC2-022A0546BFA3}
+	EndGlobalSection
+EndGlobal

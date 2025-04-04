@@ -1,0 +1,4 @@
+﻿  Card.cpp
+C:\Митя\Art\Programming\Dz\Coind\Matching game\Card.cpp(69): warning C4715: 'Map::ConsoleMapCreator': not all control paths return a value
+C:\Митя\Art\Programming\Dz\Coind\Matching game\Card.h(59): warning C4715: 'getCardsParametres': not all control paths return a value
+  Matching game.vcxproj -> C:\Митя\Art\Programming\Dz\Coind\Matching game\x64\Debug\Matching game.exe
