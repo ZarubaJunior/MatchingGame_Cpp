@@ -1,4 +1,16 @@
 ﻿  Card.cpp
-C:\Митя\Art\Programming\Dz\Coind\Matching game\Card.cpp(69): warning C4715: 'Map::ConsoleMapCreator': not all control paths return a value
+  Game.cpp
+  main.cpp
+  Generating Code...
 C:\Митя\Art\Programming\Dz\Coind\Matching game\Card.h(59): warning C4715: 'getCardsParametres': not all control paths return a value
-  Matching game.vcxproj -> C:\Митя\Art\Programming\Dz\Coind\Matching game\x64\Debug\Matching game.exe
+main.obj : error LNK2019: unresolved external symbol "public: __cdecl Game::Game(void)" (??0Game@@QEAA@XZ) referenced in function main
+main.obj : error LNK2019: unresolved external symbol "public: virtual __cdecl Game::~Game(void)" (??1Game@@UEAA@XZ) referenced in function main
+main.obj : error LNK2019: unresolved external symbol "public: bool const __cdecl Game::isRunning(void)const " (?isRunning@Game@@QEBA?B_NXZ) referenced in function main
+main.obj : error LNK2019: unresolved external symbol "public: void __cdecl Game::update(void)" (?update@Game@@QEAAXXZ) referenced in function main
+main.obj : error LNK2019: unresolved external symbol "public: void __cdecl Game::render(void)" (?render@Game@@QEAAXXZ) referenced in function main
+C:\Митя\Art\Programming\Dz\Coind\Matching game\External\SFML\lib\sfml-graphics-d.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Митя\Art\Programming\Dz\Coind\Matching game\External\SFML\lib\sfml-window-d.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Митя\Art\Programming\Dz\Coind\Matching game\External\SFML\lib\sfml-audio-d.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Митя\Art\Programming\Dz\Coind\Matching game\External\SFML\lib\sfml-network-d.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Митя\Art\Programming\Dz\Coind\Matching game\External\SFML\lib\sfml-system-d.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Митя\Art\Programming\Dz\Coind\Matching game\x64\Debug\Matching game.exe : fatal error LNK1120: 5 unresolved externals
