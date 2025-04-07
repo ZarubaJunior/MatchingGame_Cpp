@@ -8,20 +8,14 @@ void Game::initWindow()
 	this->window->setFramerateLimit(60);
 
 	this->view = sf::View(sf::FloatRect(0.f, 0.f, this->videoMode.width, this->videoMode.height));
-	this->window->setMouseCursorVisible(false);
+	//this->window->setMouseCursorVisible(false);
 }
 
 void Game::initVars() {
 	this->window = nullptr;
 
 
-	this->mouseCircle.setFillColor(sf::Color(255, 242, 122));
-	this->mouseCircle.setPosition(sf::Vector2f(0, 0));
-	this->mouseCircle.setRadius(10.f);
-	//this->mouseCircle.setOrigin(this->mouseCircle.getRadius(), this->mouseCircle.getRadius());
-	this->mouseEntity.setFillColor(sf::Color(0, 0, 0, 20));
-	this->mouseEntity.setPosition(sf::Vector2f(0, 0));
-	this->mouseEntity.setRadius(10.f);
+	map.initSprites();
 }
 
 void Game::initTilesMenu()
@@ -46,7 +40,7 @@ const bool Game::isRunning() const { return this->window && this->window->isOpen
 
 void Game::handleTileClick(const sf::Vector2f& worldPos)
 {/*
-	for (auto& cards : cards)
+	for (auto& cardSprites : cardSprites)
 	{
 		if (cards.tileRect.getGlobalBounds().contains(worldPos))
 		{
@@ -109,10 +103,10 @@ void Game::updateEvents(float deltaTime)
 			break;
 		case sf::Event::MouseButtonPressed:
 			if (this->ev.mouseButton.button == sf::Mouse::Left) {
-				sf::Vector2i pixelPos = sf::Mouse::getPosition(*this->window);
-				sf::Vector2f worldPos = this->window->mapPixelToCoords(pixelPos);
+				sf::Vector2i mousePixelPos = sf::Mouse::getPosition(*this->window);
+				sf::Vector2f mouseWorldPos = this->window->mapPixelToCoords(mousePixelPos);
 				//this->mouseCircle.getPosition();
-				this->handleTileClick(this->mouseEntity.getPosition());
+				map.HandleClick(mouseWorldPos);
 			}
 			break;
 		}
@@ -124,75 +118,27 @@ void Game::update()
 {
 	deltaTime = clock.restart().asSeconds();
 
-	updateEvents(deltaTime);
-
-	float cameraSpeed = 700.f;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		this->view.move(0.f, -cameraSpeed * deltaTime);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		this->view.move(0.f, cameraSpeed * deltaTime);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		this->view.move(-cameraSpeed * deltaTime, 0.f);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		this->view.move(cameraSpeed * deltaTime, 0.f);
-	}
-
-	// Update the window's active view
 	this->window->setView(this->view);
 
-	// 3) Now that the camera/view is updated, map mouse to world
 	sf::Vector2i mousePixelPos = sf::Mouse::getPosition(*this->window);
 	sf::Vector2f mouseWorldPos = this->window->mapPixelToCoords(mousePixelPos);
 
-	// 4) Position the circle
-	this->mouseEntity.setPosition(mouseWorldPos.x, mouseWorldPos.y);
-	this->mouseCircle.setPosition(mouseWorldPos.x - 100, mouseWorldPos.y - 100);
+
+	updateEvents(deltaTime);
 }
 
 
-void Game::updateCamera(float deltaTime, sf::Vector2f mouse)
-{
-	float cameraSpeed = 700.f;
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		this->mouseCircle.setPosition(mouse.x, -cameraSpeed * deltaTime);
-		this->view.move(0.f, -cameraSpeed * deltaTime);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		this->mouseCircle.setPosition(mouse.x, cameraSpeed * deltaTime);
-		this->view.move(0.f, cameraSpeed * deltaTime);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		this->view.move(-cameraSpeed * deltaTime, 0.f);
-		this->mouseCircle.setPosition(-cameraSpeed * deltaTime, mouse.y);
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		this->view.move(cameraSpeed * deltaTime, 0.f);
-		this->mouseCircle.setPosition(cameraSpeed * deltaTime, mouse.y);
-	}
-
-
-	this->window->setView(this->view);
-}
 void Game::render()
 {
 	if (this->window) {
 		this->window->clear(sf::Color(76, 120, 194));
 
 		this->window->setView(this->view);
-		/*
-		for (auto& tile : tiles) {
-			this->window->draw(tile.tileRect);
-			this->window->draw(tile.tileSprite);
-		}
 
-		this->window->draw(this->mouseCircle);
+		map.drawMapGUI(*window);
+
 		this->window->setView(this->window->getDefaultView());
-		this->window->draw(tilesMenu);*/
+
 		this->window->display();
 	}
 }

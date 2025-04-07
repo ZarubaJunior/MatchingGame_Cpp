@@ -20,7 +20,7 @@ private:
 	void initVars();
 	void initTilesMenu();
 	void keyBoardInput();
-	void updateCamera(float deltaTime, sf::Vector2f mouse);
+//	void updateCamera(float deltaTime, sf::Vector2f mouse);
 	void handleTileClick(const sf::Vector2f& worldPos);
 private:
 	sf::RenderWindow* window;
@@ -28,11 +28,10 @@ private:
 	sf::VideoMode videoMode;
 	sf::Clock clock;
 	sf::View view;
-	sf::CircleShape mouseCircle;
-	sf::CircleShape mouseEntity;
 	float deltaTime;
 	std::vector <Card> cards;
 	Card card;
+	MapGUI map;
 	float currentZoom;
 	float targetZoom;
 };
