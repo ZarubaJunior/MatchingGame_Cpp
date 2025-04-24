@@ -34,26 +34,26 @@ inline CardsParametres getCardsParametres(CardType type) {
 		return { 1 };
 		break;
 	case CardType::AceOfTrumpets:
-		break;
 		return { 2 };
+		break;		
 	case CardType::AceOfHearts:
-		break;
 		return { 3 };
+		break;		
 	case CardType::AceOfDiamonds:
-		break;
 		return { 4 };
-	case CardType::KingHearts:
 		break;
+	case CardType::KingHearts:
 		return { 5 };
+		break;		
 	case CardType::KingTrumpets:
 		break;
 		return { 6 };
 	case CardType::BlackJoker:
-		break;
 		return { 7 };
+		break;		
 	case CardType::WhiteJoker:
-		break;
 		return { 8 };
+		break;	
 	default:
 		break;
 	}
@@ -110,8 +110,7 @@ inline CardType getCardTypeFromID(int id) {
 	case 7: return CardType::BlackJoker;
 	case 8: return CardType::WhiteJoker;
 	default:
-		// You can choose to throw an exception or return a default value
-		return CardType::AceOfSpades;
+		return CardType::None;
 	}
 }
 class Card
@@ -131,7 +130,7 @@ public:
 	int ConsoleMapCreator(CardType type); 
 
 	std::vector<std::vector<CardType>> tiles;
-	bool IsTwoCards(CardType type);
+//	bool IsTwoCards(CardType type);
 	bool IsTwoCardsV2(CardType type, int xMain, int yMain);
 	int counter = 0;
 
@@ -154,10 +153,12 @@ public:
 	Map map;
 	void drawMapGUI(sf::RenderWindow& window);
 	int width = 4, height = 4;
-
+	sf::RectangleShape background;
 	void HandleClick(const sf::Vector2f& worldPos);
 	int clickCounter = 0;
 	void resetMapAfterClick();
 	CardType previousCardClicked =CardType::None;
 	sf::Vector2i prevCardPos = { 0,0 };
+	sf::Vector2f mapOffstet = { 50,50 };
+	
 };

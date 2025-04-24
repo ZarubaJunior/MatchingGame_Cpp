@@ -1,5 +1,6 @@
 #include "Card.h"
 
+// Sets map size by width(x) and hight(y)
 void Map::SetMapSize(int x, int y)
 {
     width = x;
@@ -8,37 +9,31 @@ void Map::SetMapSize(int x, int y)
 
 void Map::SetMap()
 {
-    // Initialize the 2D grid: each row gets resized once with CardType::None.
-    tiles.resize(height);
-    for (int y = 0; y < height; ++y) {
-        tiles[y].resize(width, CardType::None);
-    }
+    tiles.resize(height); // Resizing Vector
+    for (int y = 0; y < height; ++y) 
+        tiles[y].resize(width, CardType::None); // Changing size by height and Seting card type to None for all card
 
-    // Fill the grid in row-major order.
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
-        link:
-            CardType type = GetRandomType();
+        link: // Bad Code            
+            CardType type = GetRandomType(); // Getting random number for card
             int cardID = getCardsParametres(type).id;
-            
-            // Tentatively assign the card type.
-            tiles[y][x] = type;
-            // Check if placing this card makes more than two copies up to (y,x).
-            if (!IsTwoCardsV2(type, x, y))
-                goto link;
-
-            std::cout << cardID << " ";
+            tiles[y][x] = type;            
+            if (!IsTwoCardsV2(type, x, y))  // Is theere two same cards getrandom number again
+                goto link;   
+            std::cout << cardID << " "; // Console check
         }
         std::cout << std::endl;
     }
+
 }
 
-std::vector<std::vector<CardType>> Map::GetMap()
+std::vector<std::vector<CardType>> Map::GetMap() // Get Masp Array 
 {
-    return tiles;
+    return tiles; 
 }
 
-CardType Map::GetRandomType()
+CardType Map::GetRandomType() // Get Random Number
 {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -46,37 +41,32 @@ CardType Map::GetRandomType()
     return getCardTypeFromID(dis(gen));
 }
 
-int Map::ConsoleMapCreator(CardType type)
+int Map::ConsoleMapCreator(CardType type) // Returns id of field
 {
-    // For displaying purposes, simply return the card's ID.
     return getCardsParametres(type).id;
 }
 
-bool Map::IsTwoCardsV2(CardType type, int xMain, int yMain)
+bool Map::IsTwoCardsV2(CardType type, int xMain, int yMain) // Checks for two same cards
 {
     int counter = 0;
-    // Count occurrences in all rows before the current one.
-    for (int y = 0; y < yMain; y++) {
-        for (int x = 0; x < width; x++) {
+    for (int y = 0; y < yMain; y++) 
+        for (int x = 0; x < width; x++) 
             if (tiles[y][x] == type)
                 counter++;
-        }
-    }
-    // In the current row, count only the columns before the current cell.
-    for (int x = 0; x < xMain; x++) {
+
+    for (int x = 0; x < xMain; x++) 
         if (tiles[yMain][x] == type)
             counter++;
-    }
-    // Allow placement if there are fewer than 2 occurrences so far.
+
     return (counter < 2);
 }
 
-CardType Map::getCardType(int x, int y)
+CardType Map::getCardType(int x, int y) // Returns CardType using x and y coords
 {
     return (tiles[y][x]);
 }
 
-std::string MapGUI::getTexture(CardType type)
+std::string MapGUI::getTexture(CardType type) // Getting Path tp texture using CardType
 {
     switch (type)
     {
@@ -110,6 +100,7 @@ void MapGUI::initSprites()
     map.SetMapSize(width, height);
     map.SetMap();
 
+    // Resizing Vectors
     cardSprites.resize(width, std::vector<sf::Sprite>(height));
     cardTextures.resize(width, std::vector<sf::Texture>(height));
     cardRect.resize(width, std::vector<sf::RectangleShape>(height));
@@ -118,19 +109,24 @@ void MapGUI::initSprites()
 
     backSprites.resize(width, std::vector<sf::Sprite>(height));
     backTextures.resize(width, std::vector<sf::Texture>(height));
-   // for (std::vector <sf::Sprite> cardSprites in *cardSprites)
-  //  int xCounter = 0, yCounter = 0;
-    float scaleX = 5, scaleY = 5;
+
+    // Setting background square
+    float scaleX = 5, scaleY = 5;   // Setting scale
+    background.setPosition(sf::Vector2f(mapOffstet.x-10, mapOffstet.x - 10));
+    background.setSize(sf::Vector2f(32 * scaleX *4 + 20 , 32 * scaleX * 4 + 20 ));
+    background.setFillColor(sf::Color(97, 97, 97));
+
+    // Setting CardSprites
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
                         
             if (!cardTextures[x][y].loadFromFile(getTexture(map.getCardType(x,y))))
                 std::cout << "TEXTURE ERROR \n";
             cardSprites[x][y].setTexture(cardTextures[x][y]);
-            cardSprites[x][y].setPosition(sf::Vector2f(32.f * x * scaleX, 32.f * y * scaleY));
+            cardSprites[x][y].setPosition(sf::Vector2f(32.f * x * scaleX + mapOffstet.x, 32.f * y * scaleY + mapOffstet.y));
             cardSprites[x][y].setScale(scaleX, scaleY);
 
-            cardRect[x][y].setPosition(sf::Vector2f(32.f * x * scaleX, 32.f * y * scaleY));
+            cardRect[x][y].setPosition(sf::Vector2f(32.f * x * scaleX + mapOffstet.x, 32.f * y * scaleY + mapOffstet.y));
             cardRect[x][y].setSize(sf::Vector2f(32 * scaleX, 32 * scaleX));
 
             isOpened[x][y] = false;
@@ -139,19 +135,16 @@ void MapGUI::initSprites()
             if (!backTextures[x][y].loadFromFile(getTexture(CardType::None)))
                 std::cout << "TEXTURE ERROR \n";
             backSprites[x][y].setTexture(backTextures[x][y]);
-            backSprites[x][y].setPosition(sf::Vector2f(32.f * x * scaleX, 32.f * y * scaleY));
+            backSprites[x][y].setPosition(sf::Vector2f(32.f * x * scaleX + mapOffstet.x, 32.f * y * scaleY + mapOffstet.y));
             backSprites[x][y].setScale(scaleX, scaleY);
-
-
-       
-            //cardRect.setOrigin(tileSize.x / 2.f, tileSize.y / 2.f);
         }
     }
-  //  cardSprites[width, height];
 }
-
-void MapGUI::drawMapGUI(sf::RenderWindow& window)
+ 
+void MapGUI::drawMapGUI(sf::RenderWindow& window) // Draws Sprites / RENDER
 {
+    window.draw(background);
+
     for (int x = 0; x < width; ++x) 
         for (int y = 0; y < height; ++y) 
             window.draw(cardSprites[x][y]); 
@@ -160,41 +153,38 @@ void MapGUI::drawMapGUI(sf::RenderWindow& window)
         for (int y = 0; y < height; ++y) 
             if (isOpened[x][y] != true)
                 window.draw(backSprites[x][y]);
-      
 }
 
-void MapGUI::HandleClick(const sf::Vector2f& worldPos)
+void MapGUI::HandleClick(const sf::Vector2f& worldPos) // Handle Mouse click
 {
     for (int x = 0; x < width; ++x)
         for (int y = 0; y < height; ++y)
+            // Checking where user made his click
             if (cardRect[x][y].getGlobalBounds().contains(worldPos)) {
 
-                if (isOpened[x][y])
+                if (isOpened[x][y])   // If the card is already open - skip it
                     continue;
 
-                isOpened[x][y] = true;
+                isOpened[x][y] = true; // open card
                 clickCounter++;
-                if (clickCounter >= 3) 
-                    resetMapAfterClick();
+                if (clickCounter >= 3)  // Closing all not skipped cards on the map if user didn't guess the card
+                    resetMapAfterClick(); 
  
-                if (clickCounter == 1)
-                {
+                if (clickCounter == 1)  // Checking if prev. card is same as present card resetMapAfterClick
+                { 
                     previousCardClicked = map.getCardType(x, y);
                     prevCardPos = sf::Vector2i(x, y);
                 }
-                std::cout << clickCounter << endl;
                 std::cout << x << ":" << x << endl;
-                if (previousCardClicked == map.getCardType(x, y) && clickCounter == 2) {
+                // If User guessed the second card both of them will be skipped while 
+                if (previousCardClicked == map.getCardType(x, y) && clickCounter == 2) { 
                     isSkipped[x][y] = true;
                     isSkipped[prevCardPos.x][prevCardPos.y] = true;
                 }
-
-                //previousCardClicked = map.getCardType(x,y);
-            }
-                
+            }         
 }
 
-void MapGUI::resetMapAfterClick()
+void MapGUI::resetMapAfterClick()   // Closing all not skipped cards on the map
 {
     clickCounter = 0;
 

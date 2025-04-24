@@ -4,7 +4,7 @@ void Game::initWindow()
 	this->videoMode.height = 1000;
 	this->videoMode.width = 1800;
 
-	this->window = new sf::RenderWindow(this->videoMode, "Animation Program");
+	this->window = new sf::RenderWindow(this->videoMode, "Match Game");
 	this->window->setFramerateLimit(60);
 
 	this->view = sf::View(sf::FloatRect(0.f, 0.f, this->videoMode.width, this->videoMode.height));
@@ -38,24 +38,6 @@ Game::~Game() { delete this->window; }
 
 const bool Game::isRunning() const { return this->window && this->window->isOpen(); }
 
-void Game::handleTileClick(const sf::Vector2f& worldPos)
-{/*
-	for (auto& cardSprites : cardSprites)
-	{
-		if (cards.tileRect.getGlobalBounds().contains(worldPos))
-		{
-			tile.init(
-				tile.tileRect.getPosition().x,
-				tile.tileRect.getPosition().y,
-				tile.tileRect.getSize().x,
-				tile.tileRect.getSize().y,
-				TileType::Water
-			);
-
-			break;
-		}
-	}*/
-}
 
 void Game::updateEvents(float deltaTime)
 {
@@ -77,7 +59,7 @@ void Game::updateEvents(float deltaTime)
 			{
 
 
-				// 2) Decide how much to zoom
+				//Decide how much to zoom
 				float zoomFactor = (this->ev.mouseWheelScroll.delta > 0) ? 0.95f : 1.05f;
 
 				sf::Vector2i windowCenterPx(
@@ -85,17 +67,17 @@ void Game::updateEvents(float deltaTime)
 					this->window->getSize().y / 2
 				);
 
-				// 3) Convert that center to world coords BEFORE zoom
+				// Convert that center to world coords BEFORE zoom
 				sf::Vector2f beforeZoomCenterWorld = this->window->mapPixelToCoords(windowCenterPx);
 
-				// 4) Zoom the view
+				// Zoom the view
 				this->view.zoom(zoomFactor);
 				this->window->setView(this->view);
 
-				// 5) Convert the same pixel center to world coords AFTER zoom
+				// Convert the same pixel center to world coords AFTER zoom
 				sf::Vector2f afterZoomCenterWorld = this->window->mapPixelToCoords(windowCenterPx);
 
-				// 6) Offset the view so the center stays the same
+				// Offset the view so the center stays the same
 				sf::Vector2f offset = beforeZoomCenterWorld - afterZoomCenterWorld;
 				this->view.move(offset);
 				this->window->setView(this->view);
@@ -131,7 +113,7 @@ void Game::update()
 void Game::render()
 {
 	if (this->window) {
-		this->window->clear(sf::Color(76, 120, 194));
+		this->window->clear(sf::Color(9, 22, 79));
 
 		this->window->setView(this->view);
 

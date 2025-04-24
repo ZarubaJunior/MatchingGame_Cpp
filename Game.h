@@ -20,8 +20,6 @@ private:
 	void initVars();
 	void initTilesMenu();
 	void keyBoardInput();
-//	void updateCamera(float deltaTime, sf::Vector2f mouse);
-	void handleTileClick(const sf::Vector2f& worldPos);
 private:
 	sf::RenderWindow* window;
 	sf::Event ev;

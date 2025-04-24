@@ -1,4 +1,4 @@
 ﻿  Card.cpp
-C:\Митя\Art\Programming\Dz\Coind\Matching game\Card.cpp(109,14): warning C4101: 'type': unreferenced local variable
+C:\Митя\Art\Programming\Dz\Coind\Matching game\Card.cpp(99,14): warning C4101: 'type': unreferenced local variable
 C:\Митя\Art\Programming\Dz\Coind\Matching game\Card.h(60): warning C4715: 'getCardsParametres': not all control paths return a value
   Matching game.vcxproj -> C:\Митя\Art\Programming\Dz\Coind\Matching game\Debug\Matching game.exe
